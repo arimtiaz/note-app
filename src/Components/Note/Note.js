@@ -10,6 +10,10 @@ const Note = () => {
     setTitle(e.target.value);
     setDescription(e.target.value);
     notes.push(title,description)
+    setNotes([
+        ...notes,
+        { title: title, description: description }
+      ])
     console.log(notes)
   }
   return (

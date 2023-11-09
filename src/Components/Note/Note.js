@@ -1,35 +1,25 @@
 import React, { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
-const Note = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [notes, setNotes] = useState([]);
+const Note = ({input, setInput, handleChange}) => {
+  // const [notes, setNotes] = useState([]);
+  // const [input, setInput] = useState("");
+  // let notes= props.notes;
 
-  function handleChange(e) {
-    setTitle(e.target.value);
-    setDescription(e.target.value);
-    notes.push(title,description)
-    setNotes([
-        ...notes,
-        { title: title, description: description }
-      ])
-    console.log(notes)
-  }
+  // function handleChange(e) {
+  //   // setInput(e.target.value);
+
+  //   notes.push(input)
+  //   console.log(notes)
+  // }
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
         <div>
-          <input
-            placeholder="Title"
-            className="focus:outline-none text-xl font-semibold mb-4"
-            onChange={(e) => {setTitle(e.target.value)}}
-            value={title}
-          />
-          <input
-            placeholder="Lorem ipsum dolor sit amet"
-            className="focus:outline-none"
-            name="Description"
-            onChange={(e) => {setDescription(e.target.value)}}
+          <textarea
+            placeholder="Your note here..."
+            className="focus:outline-none text-xl font-medium mb-4"
+            onChange={(e) => {setInput(e.target.value)}}
+            value={input}
           />
         </div>
         {/* Footer */}

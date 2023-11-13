@@ -6,23 +6,23 @@ const Notes = () => {
   const [input, setInput] = useState("");
   const [notes, setNotes] = useState([]);
 
-  function handleChange(e) {
-    setInput(e.target.value);
-
-    notes.push(input);
-    console.log(notes);
-
+  function addNote() {
+    setNotes(...notes,[input])
+    setInput("")
+    // console.log(notes);
   }
 
   return (
     <div className="grid grid-cols-3 gap-10">
       <Note
         notes={notes}
-        handleChange={handleChange}
+        handleChange={addNote}
         input={input}
         setInput={setInput}
       ></Note>
-      <DisplayNote notes={notes}></DisplayNote>
+      {notes.map((note) => {
+         return <DisplayNote notes={note}></DisplayNote>
+      })}
     </div>
   );
 };

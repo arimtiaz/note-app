@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
-const Note = ({input, setInput, handleChange}) => {
+const Note = ({input, setInput, addNote}) => {
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
@@ -12,7 +12,7 @@ const Note = ({input, setInput, handleChange}) => {
             onChange={(e) => {setInput(e.target.value)}}
             value={input}
             rows={6}
-            cols={32}
+            cols={3}
           />
         </div>
         {/* Footer */}
@@ -24,7 +24,7 @@ const Note = ({input, setInput, handleChange}) => {
           </div>
           <div>
             <button
-            onClick={handleChange}
+            onClick={addNote}
               type="submit"
               className="bg-black text-white p-2 rounded-md px-3"
             >

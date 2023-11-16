@@ -11,7 +11,7 @@ const DisplayNote = ({ notes, handleDelete}) => {
         {/* Footer */}
         <div class="grid grid-cols-2 absolute bottom-0 items-center mb-2">
           <div className="">
-            <button onClick={()=> handleDelete(notes)}>
+            <button onClick={()=> handleDelete(notes.id)}>
               <AiFillDelete></AiFillDelete>
             </button>
           </div>

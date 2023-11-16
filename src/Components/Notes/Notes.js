@@ -5,9 +5,9 @@ import DisplayNote from "../DisplayNote/DisplayNote";
 const Notes = () => {
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  const [notes, setNotes] = useState([{id: Math.random() * 100,
-    title: "title",
-    description: "description",}]);
+  const [notes, setNotes] = useState([
+    { id: Math.random() * 100, title: "title", description: "description" },
+  ]);
 
   function addNote() {
     setNotes(...notes, {
@@ -19,7 +19,9 @@ const Notes = () => {
     setTitle("");
     console.log(notes);
   }
-  function handleDelete(notes) {
+  function handleDelete(id) {
+    const filteredNotes = notes.filter((note) => note.id !== id);
+    setNotes(filteredNotes);
     console.log("Deleting", notes);
   }
 
@@ -33,10 +35,9 @@ const Notes = () => {
         title={title}
         setTitle={setTitle}
       ></Note>
- {notes.map((note) => (
+      {notes.map((note) => (
         <DisplayNote key={note.id} notes={note} handleDelete={handleDelete} />
       ))}
-     
     </div>
   );
 };

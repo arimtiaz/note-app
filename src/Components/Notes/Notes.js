@@ -9,16 +9,29 @@ const Notes = () => {
     { id: Math.random() * 100, title: "title", description: "description" },
   ]);
 
+  // function addNote() {
+  //   setNotes(...notes, {
+  //     id: Math.random() * 10,
+  //     title: title,
+  //     description: description,
+  //   });
+  //   setDescription("");
+  //   setTitle("");
+  //   console.log(notes);
+  // }
   function addNote() {
-    setNotes(...notes, {
-      id: Math.random() * 10,
-      title: title,
-      description: description,
-    });
-    setDescription("");
+    setNotes((prevState) => [
+      ...prevState,
+      {
+        id: Math.random() * 100,
+        title: title,
+        description: description,
+      },
+    ]);
+    //clear the textarea
     setTitle("");
-    console.log(notes);
-  }
+    setDescription("");
+  };
   function handleDelete(id) {
     const filteredNotes = notes.filter((note) => note.id !== id);
     setNotes(filteredNotes);

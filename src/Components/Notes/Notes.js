@@ -6,7 +6,7 @@ const Notes = () => {
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState([
-    { id: Math.random() * 100, title: "title", description: "description" },
+    
   ]);
 
   // function addNote() {

@@ -1,16 +1,17 @@
 import React from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 
-const DisplayNote = ({notes}) => {
+const DisplayNote = ({ notes, handleDelete}) => {
     return (
         <div className="bg-white w-96 h-60 rounded-md p-4 relative">
         <div>
-         <p className='font-medium'>{notes}</p>
+          <h1 className='text-xl font-medium'>{notes.title}</h1>
+         <p className='text-md font-medium'>{notes.description}</p>
         </div>
         {/* Footer */}
-        <div class="grid grid-cols-2 absolute bottom-0 items-center space-x-reverse mb-2">
+        <div class="grid grid-cols-2 absolute bottom-0 items-center mb-2">
           <div className="">
-            <button>
+            <button onClick={()=> handleDelete(notes)}>
               <AiFillDelete></AiFillDelete>
             </button>
           </div>

@@ -1,18 +1,23 @@
-import React, { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
-const Note = ({input, setInput, addNote}) => {
+const Note = ({description, setDescription, addNote, setTitle, title, notes}) => {
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
         <div>
+        <input
+            placeholder="Title"
+            className="focus:outline-none text-xl font-semibold mb-2"
+            onChange={(e) => {setTitle(e.target.value)}}
+            value={title}
+          />
           <textarea
-            placeholder="Your note here..."
-            className="focus:outline-none text-xl font-medium mb-4"
-            onChange={(e) => {setInput(e.target.value)}}
-            value={input}
-            rows={6}
-            cols={3}
+            placeholder="Description"
+            className="focus:outline-none text-md font-medium mb-4"
+            onChange={(e) => {setDescription(e.target.value)}}
+            value={description}
+            rows={7}
+            cols={40}
           />
         </div>
         {/* Footer */}

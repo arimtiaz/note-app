@@ -11,9 +11,6 @@ function App() {
       <div>
         <h1 className='text-2xl font-bold text-white'>All Notes</h1>
       </div>
-      <div>
-        <button className='bg-white p-2 rounded-md font-semibold'>Add New</button>
-      </div>
     </div>
     {/* Body */}
       <div>

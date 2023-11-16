@@ -3,26 +3,40 @@ import Note from "../Note/Note";
 import DisplayNote from "../DisplayNote/DisplayNote";
 
 const Notes = () => {
-  const [input, setInput] = useState("");
-  const [notes, setNotes] = useState([]);
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [notes, setNotes] = useState([{id: Math.random() * 100,
+    title: "title",
+    description: "description",}]);
 
   function addNote() {
-    setNotes(...notes,[input])
-    setInput("")
-    // console.log(notes);
+    setNotes(...notes, {
+      id: Math.random() * 10,
+      title: title,
+      description: description,
+    });
+    setDescription("");
+    setTitle("");
+    console.log(notes);
+  }
+  function handleDelete(notes) {
+    console.log("Deleting", notes);
   }
 
   return (
     <div className="grid grid-cols-3 gap-10">
       <Note
         notes={notes}
-        handleChange={addNote}
-        input={input}
-        setInput={setInput}
+        addNote={addNote}
+        description={description}
+        setDescription={setDescription}
+        title={title}
+        setTitle={setTitle}
       ></Note>
-      {notes.map((note) => {
-         return <DisplayNote notes={note}></DisplayNote>
-      })}
+ {notes.map((note) => (
+        <DisplayNote key={note.id} notes={note} handleDelete={handleDelete} />
+      ))}
+     
     </div>
   );
 };

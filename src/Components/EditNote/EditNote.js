@@ -1,6 +1,6 @@
 import { AiFillDelete } from "react-icons/ai";
 
-const Note = ({description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
+const EditNote = ({description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
@@ -41,4 +41,4 @@ const Note = ({description, setDescription, addNote, setTitle, title, notes, han
   );
 };
 
-export default Note;
+export default EditNote;

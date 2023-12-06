@@ -9,7 +9,7 @@ const EditNote = ({setNotes, notes,note}) => {
   function addUpdatedNote() {
     console.log(notes)
     setNotes(() => [
-      ...notes,
+
       {
         id: Math.random() * 100,
         title: updatedTitle,
@@ -18,6 +18,7 @@ const EditNote = ({setNotes, notes,note}) => {
     ]);
     // setNotes(updatedNotes)
   }
+  
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">

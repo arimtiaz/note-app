@@ -52,7 +52,7 @@ const Notes = () => {
   function handleEdit(id, note) {
     setEditing(id);
     // setNotes(note)
-    console.log(id, note);
+    console.log( note);
   }
 
   return (

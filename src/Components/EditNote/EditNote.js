@@ -1,39 +1,51 @@
+import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
-const EditNote = ({description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
+const EditNote = ({setNotes, notes,note}) => {
+  const [updatedTitle, setUpdateTitle] = useState(note.title);
+  const [updatedDescription, setUpdatedDescription] = useState(note.description);
+  const [updatedNotes, setUpdatedNotes] = useState([]);
+
+  function addUpdatedNote() {
+    console.log(notes)
+    setNotes(() => [
+      ...notes,
+      {
+        id: Math.random() * 100,
+        title: updatedTitle,
+        description: updatedDescription,
+      },
+    ]);
+    // setNotes(updatedNotes)
+  }
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
         <div>
         <input
-            placeholder="Title"
+            placeholder="Updated Title"
             className="focus:outline-none text-xl font-semibold mb-2"
-            onChange={(e) => {setTitle(e.target.value)}}
-            value={title}
+            onChange={(e) => {setUpdateTitle(e.target.value)}}
+            value={updatedTitle}
           />
           <textarea
-            placeholder="Description"
+            placeholder="Updated Description"
             className="focus:outline-none text-md font-medium mb-4"
-            onChange={(e) => {setDescription(e.target.value)}}
-            value={description}
+            onChange={(e) => {setUpdatedDescription(e.target.value)}}
+            value={updatedDescription}
             rows={7}
             cols={40}
           />
         </div>
         {/* Footer */}
-        <div class="grid grid-cols-2 absolute bottom-0 items-center space-x-reverse mb-2">
-          <div className="">
-            <button onClick={handleClear}>
-              <p>Clear</p>
-            </button>
-          </div>
+        <div class="grid grid-cols-2 absolute bottom-0 items-center  mb-2">
           <div>
             <button
-            onClick={addNote}
+            onClick={addUpdatedNote}
               type="submit"
-              className="bg-black text-white p-2 rounded-md px-3"
+              className="bg-orange-500 text-white p-2 rounded-md px-3"
             >
-              Save
+              Update
             </button>
           </div>
         </div>

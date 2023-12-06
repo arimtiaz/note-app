@@ -4,10 +4,10 @@ import DisplayNote from "../DisplayNote/DisplayNote";
 import EditNote from "../EditNote/EditNote";
 
 const Notes = () => {
-  const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [notes, setNotes] = useState([]);
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState({});
 
   useEffect(() => {
     const data = window.localStorage.getItem("Notes");
@@ -49,9 +49,10 @@ const Notes = () => {
     // console.log("Deleting", notes);
   }
 
-  function handleEdit() {
-    setEditing(true);
-    // console.log(setEditing)
+  function handleEdit(id, note) {
+    setEditing(id);
+    // setNotes(note)
+    console.log(id, note);
   }
 
   return (
@@ -65,9 +66,18 @@ const Notes = () => {
         title={title}
         setTitle={setTitle}
       ></Note>
-      {notes.map((note) => (
-        setEditing ?(<DisplayNote key={note.id} handleEdit={handleEdit} notes={note} handleDelete={handleDelete} ></DisplayNote>) : (<EditNote></EditNote>) 
-      ))}
+      {notes.map((note) =>
+        editing === note.id ? (
+          <EditNote key={note.id} setNotes={setNotes} notes={notes} note={note}></EditNote>
+        ) : (
+          <DisplayNote
+            handleEdit={handleEdit}
+            key={note.id}
+            note={note}
+            handleDelete={handleDelete}
+          ></DisplayNote>
+        )
+      )}
     </div>
   );
 };

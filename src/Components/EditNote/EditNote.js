@@ -4,19 +4,18 @@ import { AiFillDelete } from "react-icons/ai";
 const EditNote = ({setNotes, notes,note}) => {
   const [updatedTitle, setUpdateTitle] = useState(note.title);
   const [updatedDescription, setUpdatedDescription] = useState(note.description);
-  const [updatedNotes, setUpdatedNotes] = useState([]);
 
-  function addUpdatedNote() {
-    console.log(notes)
-    setNotes(() => [
-
-      {
-        id: Math.random() * 100,
-        title: updatedTitle,
-        description: updatedDescription,
-      },
-    ]);
-    // setNotes(updatedNotes)
+  function updateNote() {
+    const updatedNotes = notes.map((n) =>
+      n.id === note.id
+        ? {
+            ...notes,
+            title: updatedTitle,
+            description: updatedDescription,
+          }
+        : n
+    );
+    setNotes(updatedNotes);
   }
   
 
@@ -42,7 +41,7 @@ const EditNote = ({setNotes, notes,note}) => {
         <div class="grid grid-cols-2 absolute bottom-0 items-center  mb-2">
           <div>
             <button
-            onClick={addUpdatedNote}
+            onClick={updateNote}
               type="submit"
               className="bg-orange-500 text-white p-2 rounded-md px-3"
             >

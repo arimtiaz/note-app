@@ -7,7 +7,7 @@ const Notes = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState([]);
-  const [editing, setEditing] = useState({});
+  const [editing, setEditing] = useState(null);
 
   useEffect(() => {
     const data = window.localStorage.getItem("Notes");
@@ -49,10 +49,11 @@ const Notes = () => {
     // console.log("Deleting", notes);
   }
 
-  function handleEdit(id, note) {
+  function handleEdit(id) {
+    // const updatedNotes = [...notes];
     setEditing(id);
-    // setNotes(note)
-    console.log( note);
+    // setNotes(updatedNotes)
+    // console.log(note);
   }
 
   return (

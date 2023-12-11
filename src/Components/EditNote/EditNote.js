@@ -47,6 +47,7 @@ const EditNote = ({setNotes, notes,note}) => {
               Update
             </button>
           </div>
+
         </div>
     </div>
   );

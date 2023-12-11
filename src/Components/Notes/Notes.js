@@ -8,15 +8,6 @@ const Notes = () => {
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
-  const [time, setTime] = useState(0);
-  function getTime(){
-    const showDate = new Date();
-    const showTime =
-      showDate.getHours() +
-      ":" +
-      showDate.getMinutes();
-    setTime(showTime);
-  }
   
 
   useEffect(() => {
@@ -41,14 +32,14 @@ const Notes = () => {
         id: Math.random() * 100,
         title: title,
         description: description,
+        time: new Date().toLocaleTimeString(),
       },
     ]);
     //clear the textarea
     setTitle("");
     setDescription("");
-    getTime()
+    // getTime()
   }
-  console.log(time)
   
   function handleClear() {
     setTitle("");
@@ -85,7 +76,6 @@ const Notes = () => {
           ></EditNote>
         ) : (
           <DisplayNote
-          time={time}
             handleEdit={handleEdit}
             key={note.id}
             note={note}

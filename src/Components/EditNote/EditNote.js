@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AiFillDelete } from "react-icons/ai";
 
 const EditNote = ({setNotes, notes,note}) => {
   const [updatedTitle, setUpdateTitle] = useState(note.title);

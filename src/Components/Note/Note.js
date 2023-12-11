@@ -1,17 +1,6 @@
 import { AiFillDelete } from "react-icons/ai";
 
-const Note = ({time, setTime, description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
-
-  // function getTime(){
-  //   const showDate = new Date();
-  //   const showTime =
-  //     showDate.getHours() +
-  //     ":" +
-  //     showDate.getMinutes() +
-  //     ":" +
-  //     showDate.getSeconds();
-  //   setTime(showTime);
-  // }
+const Note = ({setTime, description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">

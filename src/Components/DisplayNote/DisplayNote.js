@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
 const DisplayNote = ({time, setTime, note, handleDelete, handleEdit }) => {
-  
-  console.log(time)
+  // console.log(time)
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
       <div>
@@ -30,7 +29,7 @@ const DisplayNote = ({time, setTime, note, handleDelete, handleEdit }) => {
         </div>
       </div>
       <div className="absolute bottom-0 right-0 p-4 text-gray-600">
-      <h1>Created on {time}</h1>
+      <h1>Created on {note.time}</h1>
       </div>
     </div>
   );

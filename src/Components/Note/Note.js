@@ -1,6 +1,17 @@
 import { AiFillDelete } from "react-icons/ai";
 
-const Note = ({description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
+const Note = ({time, setTime, description, setDescription, addNote, setTitle, title, notes, handleClear}) => {
+
+  // function getTime(){
+  //   const showDate = new Date();
+  //   const showTime =
+  //     showDate.getHours() +
+  //     ":" +
+  //     showDate.getMinutes() +
+  //     ":" +
+  //     showDate.getSeconds();
+  //   setTime(showTime);
+  // }
 
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
@@ -17,7 +28,7 @@ const Note = ({description, setDescription, addNote, setTitle, title, notes, han
             onChange={(e) => {setDescription(e.target.value)}}
             value={description}
             rows={7}
-            cols={40}
+            cols={38}
           />
         </div>
         {/* Footer */}
@@ -29,7 +40,7 @@ const Note = ({description, setDescription, addNote, setTitle, title, notes, han
           </div>
           <div>
             <button
-            onClick={addNote}
+            onClick={() => addNote()}
               type="submit"
               className="bg-black text-white p-2 rounded-md px-3"
             >

@@ -8,6 +8,16 @@ const Notes = () => {
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [time, setTime] = useState(0);
+  function getTime(){
+    const showDate = new Date();
+    const showTime =
+      showDate.getHours() +
+      ":" +
+      showDate.getMinutes();
+    setTime(showTime);
+  }
+  
 
   useEffect(() => {
     const data = window.localStorage.getItem("Notes");
@@ -36,8 +46,10 @@ const Notes = () => {
     //clear the textarea
     setTitle("");
     setDescription("");
+    getTime()
   }
-
+  console.log(time)
+  
   function handleClear() {
     setTitle("");
     setDescription("");
@@ -46,14 +58,10 @@ const Notes = () => {
   function handleDelete(id) {
     const updatedNotes = notes.filter((note) => note.id !== id);
     setNotes(updatedNotes);
-    // console.log("Deleting", notes);
   }
 
   function handleEdit(id) {
-    // const updatedNotes = [...notes];
     setEditing(id);
-    // setNotes(updatedNotes)
-    // console.log(note);
   }
 
   return (
@@ -69,9 +77,15 @@ const Notes = () => {
       ></Note>
       {notes.map((note) =>
         editing === note.id ? (
-          <EditNote key={note.id} setNotes={setNotes} notes={notes} note={note}></EditNote>
+          <EditNote
+            key={note.id}
+            setNotes={setNotes}
+            notes={notes}
+            note={note}
+          ></EditNote>
         ) : (
           <DisplayNote
+          time={time}
             handleEdit={handleEdit}
             key={note.id}
             note={note}

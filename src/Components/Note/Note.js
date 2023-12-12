@@ -9,6 +9,9 @@ const Note = ({
   title,
   notes,
   handleClear,
+  status,
+  setStatus,
+  handleStatus
 }) => {
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
@@ -21,6 +24,11 @@ const Note = ({
           }}
           value={title}
         />
+        <select value={status} onChange={handleStatus}>
+          <option value="notStarted">Not Started</option>
+          <option value="Started">Started</option>
+          <option value="Done">Done</option>
+        </select>
         <textarea
           placeholder="Description"
           className="focus:outline-none text-md font-medium mb-4"

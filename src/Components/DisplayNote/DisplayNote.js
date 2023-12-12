@@ -6,7 +6,10 @@ const DisplayNote = ({image, time, setTime, note, handleDelete, handleEdit }) =>
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
       <div>
-        <h1 className="text-xl font-medium">{note.title}</h1>
+       <div className="grid grid-cols-2 items-center">
+       <h1 className="row-end text-xl font-medium">{note.title}</h1>
+        <p className=" text-sm text-blue-600">Status: {note.status}</p>
+       </div>
         <p className="text-md font-medium">{note.description}</p>
         <img src={note.image} className=" w-36 h-28" alt="" />
       </div>

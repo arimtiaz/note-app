@@ -9,7 +9,8 @@ const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
   const [image, setImage] = useState();
-  
+  const [status, setStatus] = useState();
+  const [filteredNotes, setFilteredNotes] = useState([]);
 
   useEffect(() => {
     const data = window.localStorage.getItem("Notes");
@@ -26,8 +27,12 @@ const Notes = () => {
     console.log("Saving data from Notes", notes);
   }, [notes]);
 
-  function handleImage(e){
+  function handleImage(e) {
     setImage(URL.createObjectURL(e.target.files[0]));
+  }
+  function handleStatus(e) {
+    const status = setStatus(e.target.value);
+    console.log(status);
   }
   function addNote() {
     setNotes(() => [
@@ -38,14 +43,15 @@ const Notes = () => {
         description: description,
         image: image,
         time: new Date().toLocaleTimeString(),
+        status: status,
       },
     ]);
     //clear the textarea
     setTitle("");
     setDescription("");
-    setImage()
+    setImage();
   }
-  
+
   function handleClear() {
     setTitle("");
     setDescription("");
@@ -60,36 +66,58 @@ const Notes = () => {
     setEditing(id);
   }
 
+  function filterStatus(e){
+    const filteredNotes = notes.filter((note) => note.status === e.target.value)
+    setStatus(filteredNotes)
+    setFilteredNotes(filteredNotes)
+    console.log(filteredNotes)
+  }
   return (
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
-      <Note
-        handleClear={handleClear}
-        notes={notes}
-        addNote={addNote}
-        description={description}
-        setDescription={setDescription}
-        title={title}
-        setTitle={setTitle}
-        handleImage = {handleImage}
-      ></Note>
-      {notes.map((note) =>
-        editing === note.id ? (
-          <EditNote
-            key={note.id}
-            setNotes={setNotes}
-            notes={notes}
-            note={note}
-          ></EditNote>
-        ) : (
-          <DisplayNote
-            handleEdit={handleEdit}
-            key={note.id}
-            note={note}
-            handleDelete={handleDelete}
-            image={image}
-          ></DisplayNote>
-        )
-      )}
+    <div>
+      {/* Filter */}
+      <div>
+        <select onChange={filterStatus} className="bg-black p-3 text-white rounded-xl mb-10">
+          <option value="all">All</option>
+          <option value="notStarted">Not Started</option>
+          <option value="Started">Started</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+      {/* Note */}
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
+        <Note
+          handleClear={handleClear}
+          notes={notes}
+          addNote={addNote}
+          description={description}
+          setDescription={setDescription}
+          title={title}
+          setTitle={setTitle}
+          handleImage={handleImage}
+          status={status}
+          setStatus={setStatus}
+          handleStatus={handleStatus}
+        ></Note>
+        {notes.map((note) =>
+          editing === note.id ? (
+            <EditNote
+              key={note.id}
+              setNotes={setNotes}
+              notes={notes}
+              note={note}
+            ></EditNote>
+          ) : (
+            <DisplayNote
+              handleEdit={handleEdit}
+              key={note.id}
+              note={note}
+              handleDelete={handleDelete}
+              image={image}
+              status={status}
+            ></DisplayNote>
+          )
+        )}
+      </div>
     </div>
   );
 };

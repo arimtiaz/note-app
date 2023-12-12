@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
-const DisplayNote = ({time, setTime, note, handleDelete, handleEdit }) => {
+const DisplayNote = ({image, time, setTime, note, handleDelete, handleEdit }) => {
   // console.log(time)
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
       <div>
         <h1 className="text-xl font-medium">{note.title}</h1>
         <p className="text-md font-medium">{note.description}</p>
+        <img src={note.image} className=" w-36 h-28" alt="" />
       </div>
       {/* Footer */}
       <div class="grid grid-cols-2 absolute bottom-0 items-center mb-2">

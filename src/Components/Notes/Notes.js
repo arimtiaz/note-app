@@ -8,6 +8,7 @@ const Notes = () => {
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [image, setImage] = useState();
   
 
   useEffect(() => {
@@ -25,6 +26,9 @@ const Notes = () => {
     console.log("Saving data from Notes", notes);
   }, [notes]);
 
+  function handleImage(e){
+    setImage(URL.createObjectURL(e.target.files[0]));
+  }
   function addNote() {
     setNotes(() => [
       ...notes,
@@ -32,13 +36,14 @@ const Notes = () => {
         id: Math.random() * 100,
         title: title,
         description: description,
+        image: image,
         time: new Date().toLocaleTimeString(),
       },
     ]);
     //clear the textarea
     setTitle("");
     setDescription("");
-    // getTime()
+    setImage()
   }
   
   function handleClear() {
@@ -65,6 +70,7 @@ const Notes = () => {
         setDescription={setDescription}
         title={title}
         setTitle={setTitle}
+        handleImage = {handleImage}
       ></Note>
       {notes.map((note) =>
         editing === note.id ? (
@@ -80,6 +86,7 @@ const Notes = () => {
             key={note.id}
             note={note}
             handleDelete={handleDelete}
+            image={image}
           ></DisplayNote>
         )
       )}

@@ -9,8 +9,9 @@ const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
   const [image, setImage] = useState();
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState("notStarted");
   const [filteredNotes, setFilteredNotes] = useState([]);
+  const [selectedStatus, setSelectedStatus]= useState();
 
   useEffect(() => {
     const data = window.localStorage.getItem("Notes");
@@ -66,17 +67,25 @@ const Notes = () => {
     setEditing(id);
   }
 
-  function filterStatus(e){
-    const filteredNotes = notes.filter((note) => note.status === e.target.value)
-    setStatus(filteredNotes)
-    setFilteredNotes(filteredNotes)
-    console.log(filteredNotes)
+  function filterStatus(e) {
+    const selectedStatus = e.target.value;
+    setSelectedStatus(selectedStatus);
+
+    if(selectedStatus === "all"){
+      setFilteredNotes(notes);
+    } else {
+      const filteredNotes = notes.filter((note) => note.status === selectedStatus)
+      setFilteredNotes(filteredNotes)
+    }
   }
   return (
     <div>
       {/* Filter */}
       <div>
-        <select onChange={filterStatus} className="bg-black p-3 text-white rounded-xl mb-10">
+        <select
+          onChange={filterStatus}
+          className="bg-black p-3 text-white rounded-xl mb-10"
+        >
           <option value="all">All</option>
           <option value="notStarted">Not Started</option>
           <option value="Started">Started</option>
@@ -98,7 +107,7 @@ const Notes = () => {
           setStatus={setStatus}
           handleStatus={handleStatus}
         ></Note>
-        {notes.map((note) =>
+        {filteredNotes.map((note) =>
           editing === note.id ? (
             <EditNote
               key={note.id}

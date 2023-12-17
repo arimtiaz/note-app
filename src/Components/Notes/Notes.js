@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import Note from "../Note/Note";
 import DisplayNote from "../DisplayNote/DisplayNote";
 import EditNote from "../EditNote/EditNote";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../../firebase.init";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
   const [title, setTitle] = useState("");
@@ -9,10 +12,13 @@ const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
   const [image, setImage] = useState();
-  const [status, setStatus] = useState("notStarted");
+  const [status, setStatus] = useState("All");
   const [filteredNotes, setFilteredNotes] = useState([]);
-  const [selectedStatus, setSelectedStatus]= useState();
+  const [selectedStatus, setSelectedStatus] = useState();
+  const [user, setUser] = useState({});
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const data = window.localStorage.getItem("Notes");
     console.log("Getting data from Notes", data);
@@ -27,6 +33,10 @@ const Notes = () => {
     window.localStorage.setItem("Notes", JSON.stringify(notes));
     console.log("Saving data from Notes", notes);
   }, [notes]);
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
   function handleImage(e) {
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -71,23 +81,53 @@ const Notes = () => {
     const selectedStatus = e.target.value;
     setSelectedStatus(selectedStatus);
 
-    if(selectedStatus === "all"){
+    if (selectedStatus === "all") {
       setFilteredNotes(notes);
     } else {
-      const filteredNotes = notes.filter((note) => note.status === selectedStatus)
-      setFilteredNotes(filteredNotes)
+      const filteredNotes = notes.filter(
+        (note) => note.status === selectedStatus
+      );
+      setFilteredNotes(filteredNotes);
     }
   }
+
+  function handleSignOut() {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        navigate('/')
+        // console.log("Sign Out Successful");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  }
+
   return (
     <div>
+      {/* Header */}
+      <div className="Header flex justify-between mb-12 items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white">All Notes Of {user.email}</h1>
+        </div>
+        <div>
+          <button
+            onClick={handleSignOut}
+            className="btn bg-white p-2 rounded-lg font-semibold"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
       {/* Filter */}
       <div>
         <select
           onChange={filterStatus}
           className="bg-black p-3 text-white rounded-xl mb-10"
         >
-          <option value="all">All</option>
-          <option value="notStarted">Not Started</option>
+          <option value="All">All</option>
+          <option value="Not-Started">Not Started</option>
           <option value="Started">Started</option>
           <option value="Done">Done</option>
         </select>

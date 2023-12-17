@@ -1,22 +1,24 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Note from "./Components/Note/Note";
 import Notes from "./Components/Notes/Notes";
+import app from "./firebase.init";
+import SignUpForm from "./Components/SignForm/SignUpForm";
+import { Route, Routes } from "react-router-dom";
+import SignInForm from "./Components/SignForm/SignInForm";
 
 function App() {
-
-
   return (
     <div className="App p-5">
-      {/* Header */}
-      <div className="Header flex justify-between mb-12 items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-white">All Notes</h1>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/signin" element={<SignInForm />} />
+        <Route path="/" element={<SignUpForm />} />
+        <Route path="/notes" element={<Notes></Notes>} />
+      </Routes>
+
       {/* Body */}
       <div>
-        <Notes></Notes>
+        {/* <SignUpForm></SignUpForm> */}
+        {/* <Notes></Notes> */}
       </div>
     </div>
   );

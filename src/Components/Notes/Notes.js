@@ -12,7 +12,7 @@ const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [editing, setEditing] = useState(null);
   const [image, setImage] = useState();
-  const [status, setStatus] = useState("All");
+  const [status, setStatus] = useState("notStarted");
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState();
   const [user, setUser] = useState({});
@@ -34,16 +34,21 @@ const Notes = () => {
     console.log("Saving data from Notes", notes);
   }, [notes]);
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  
+    // Cleanup function to unsubscribe when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   function handleImage(e) {
     setImage(URL.createObjectURL(e.target.files[0]));
   }
   function handleStatus(e) {
-    const status = setStatus(e.target.value);
-    console.log(status);
+    const status = e.target.value;
+    setStatus(status);
   }
   function addNote() {
     setNotes(() => [
@@ -80,16 +85,15 @@ const Notes = () => {
   function filterStatus(e) {
     const selectedStatus = e.target.value;
     setSelectedStatus(selectedStatus);
-
+  
     if (selectedStatus === "all") {
       setFilteredNotes(notes);
     } else {
-      const filteredNotes = notes.filter(
-        (note) => note.status === selectedStatus
-      );
+      const filteredNotes = notes.filter((note) => note.status.toLowerCase() === selectedStatus.toLowerCase());
       setFilteredNotes(filteredNotes);
     }
   }
+  
 
   function handleSignOut() {
     const auth = getAuth();
@@ -126,8 +130,8 @@ const Notes = () => {
           onChange={filterStatus}
           className="bg-black p-3 text-white rounded-xl mb-10"
         >
-          <option value="All">All</option>
-          <option value="Not-Started">Not Started</option>
+          <option value="all">All</option>
+          <option value="notStarted">Not Started</option>
           <option value="Started">Started</option>
           <option value="Done">Done</option>
         </select>

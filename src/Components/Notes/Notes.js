@@ -5,6 +5,7 @@ import EditNote from "../EditNote/EditNote";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase.init";
 import { useNavigate } from "react-router-dom";
+import { getDatabase, ref, push, set } from "firebase/database";
 
 const Notes = () => {
   const [title, setTitle] = useState("");
@@ -18,30 +19,51 @@ const Notes = () => {
   const [user, setUser] = useState({});
 
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    const data = window.localStorage.getItem("Notes");
-    console.log("Getting data from Notes", data);
-    if (data) {
-      setNotes(JSON.parse(data));
-    } else {
-      setNotes([]);
-    }
-  }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem("Notes", JSON.stringify(notes));
-    console.log("Saving data from Notes", notes);
-  }, [notes]);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
+  const pushNoteToFirebase = (title, description, status) => {
+    const database = getDatabase();
+    const notesRef = ref(database, "user/notes");
   
-    // Cleanup function to unsubscribe when the component unmounts
-    return () => unsubscribe();
-  }, []);
+    // Push the new note data to Firebase
+    const newNoteRef = push(notesRef);
+    set(newNoteRef, {
+      title: title,
+      description: description,
+      status: status,
+    }).catch(alert);
+  
+    // Clear the input fields
+    setTitle("");
+    setDescription("");
+    setStatus("notStarted");
+  };
+  
+  const saveNote = () => {
+    pushNoteToFirebase(title, description, status);
+  };
+  // useEffect(() => {
+  //   const data = window.localStorage.getItem("Notes");
+  //   console.log("Getting data from Notes", data);
+  //   if (data) {
+  //     setNotes(JSON.parse(data));
+  //   } else {
+  //     setNotes([]);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("Notes", JSON.stringify(notes));
+  //   console.log("Saving data from Notes", notes);
+  // }, [notes]);
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //   });
+  
+  //   // Cleanup function to unsubscribe when the component unmounts
+  //   return () => unsubscribe();
+  // }, []);
 
   function handleImage(e) {
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -50,23 +72,23 @@ const Notes = () => {
     const status = e.target.value;
     setStatus(status);
   }
-  function addNote() {
-    setNotes(() => [
-      ...notes,
-      {
-        id: Math.random() * 100,
-        title: title,
-        description: description,
-        image: image,
-        time: new Date().toLocaleTimeString(),
-        status: status,
-      },
-    ]);
-    //clear the textarea
-    setTitle("");
-    setDescription("");
-    setImage();
-  }
+  // function addNote() {
+  //   setNotes(() => [
+  //     ...notes,
+  //     {
+  //       id: Math.random() * 100,
+  //       title: title,
+  //       description: description,
+  //       image: image,
+  //       time: new Date().toLocaleTimeString(),
+  //       status: status,
+  //     },
+  //   ]);
+  //   //clear the textarea
+  //   setTitle("");
+  //   setDescription("");
+  //   setImage();
+  // }
 
   function handleClear() {
     setTitle("");
@@ -131,7 +153,7 @@ const Notes = () => {
           className="bg-black p-3 text-white rounded-xl mb-10"
         >
           <option value="all">All</option>
-          <option value="notStarted">Not Started</option>
+          <option value="Not Started">Not Started</option>
           <option value="Started">Started</option>
           <option value="Done">Done</option>
         </select>
@@ -141,7 +163,7 @@ const Notes = () => {
         <Note
           handleClear={handleClear}
           notes={notes}
-          addNote={addNote}
+          // addNote={addNote}
           description={description}
           setDescription={setDescription}
           title={title}
@@ -150,6 +172,7 @@ const Notes = () => {
           status={status}
           setStatus={setStatus}
           handleStatus={handleStatus}
+          saveNote={saveNote}
         ></Note>
         {filteredNotes.map((note) =>
           editing === note.id ? (

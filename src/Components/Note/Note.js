@@ -11,7 +11,8 @@ const Note = ({
   handleClear,
   status,
   setStatus,
-  handleStatus
+  handleStatus,
+  saveNote,
 }) => {
   return (
     <div className="bg-white w-96 h-60 rounded-md p-4 relative">
@@ -49,13 +50,10 @@ const Note = ({
           </button>
         </div>
         <div>
-          <button
-            onClick={() => addNote()}
-            type="submit"
-            className="bg-black text-white p-2 rounded-md px-3"
-          >
-            Save
-          </button>
+        <button onClick={saveNote}  className="bg-black text-white p-2 rounded-md px-3">
+    Save
+</button>
+
         </div>
       </div>
     </div>
